@@ -2,6 +2,7 @@ const itemForm = document.getElementById('item-form');
 const itemInput = document.getElementById('item-input');
 const itemList = document.getElementById('item-list');
 const clearBtn = document.getElementById('clear');
+const itemFilter = document.getElementById('filter');
 
 function addItem(e) {
 	e.preventDefault();
@@ -20,9 +21,14 @@ function addItem(e) {
 
 	const button = createButton('remove-item btn-link text-red');
 
+	// Added the Button to the li
 	li.appendChild(button);
 
+	// Added The li to the DOM
 	itemList.appendChild(li);
+
+	// Running the CheckUI function for checks after page loads
+	checkUI();
 
 	itemList.value = '';
 }
@@ -32,6 +38,7 @@ function createButton(classes) {
 	const button = document.createElement('button');
 	button.className = classes;
 	const icon = createIcon('fa-solid fa-xmark');
+	// Added the Icon to the Button
 	button.appendChild(icon);
 	return button;
 }
@@ -62,7 +69,21 @@ function clearItems(e) {
 	}
 }
 
+// Make Dynamic By Removing the Clear and Filter Button When List is Empty
+function checkUI() {
+	const items = itemList.querySelectorAll('li');
+	if (items.length === 0) {
+		clearBtn.style.display = 'none';
+		itemFilter.style.display = 'none';
+	} else {
+		clearBtn.style.display = 'block';
+		itemFilter.style.display = 'block';
+	}
+}
+
 // Event Listeners
 itemForm.addEventListener('submit', addItem);
 itemList.addEventListener('click', removeItem);
 clearBtn.addEventListener('click', clearItems);
+
+checkUI();
