@@ -55,6 +55,8 @@ function removeItem(e) {
 	if (e.target.parentElement.classList.contains('remove-item')) {
 		// console.log('Click');
 		e.target.parentElement.parentElement.remove();
+
+		checkUI();
 	}
 }
 
@@ -67,6 +69,8 @@ function clearItems(e) {
 	while (itemList.firstChild) {
 		itemList.removeChild(itemList.firstChild);
 	}
+
+	checkUI();
 }
 
 // Make Dynamic By Removing the Clear and Filter Button When List is Empty
