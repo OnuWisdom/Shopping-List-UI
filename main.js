@@ -23,7 +23,7 @@ function addItem(e) {
 
 	itemList.appendChild(li);
 
-	// itemList.value = '';
+	itemList.value = '';
 }
 
 // Button Creation Function
