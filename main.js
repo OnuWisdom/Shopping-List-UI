@@ -54,7 +54,9 @@ function createIcon(classes) {
 function removeItem(e) {
 	if (e.target.parentElement.classList.contains('remove-item')) {
 		// console.log('Click');
-		e.target.parentElement.parentElement.remove();
+		if (confirm('Are You Sure')) {
+			e.target.parentElement.parentElement.remove();
+		}
 
 		checkUI();
 	}
