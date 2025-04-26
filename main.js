@@ -15,7 +15,11 @@ function onAddItemSubmit(e) {
 		return;
 	}
 
+	// Create Item DOM Element
 	addItemsToDom(newItem);
+
+	// Add Item To Storage
+	addItemsToStorage(newItem);
 
 	// Running the CheckUI function for checks after page loads
 	checkUI();
@@ -53,6 +57,24 @@ function createIcon(classes) {
 	const icon = document.createElement('i');
 	icon.className = classes;
 	return icon;
+}
+
+// Adding Items to Local Storage
+function addItemsToStorage(item) {
+	let itemsFromStorage;
+
+	if (localStorage.getItem('items') === null) {
+		itemsFromStorage = [];
+	} else {
+		itemsFromStorage = JSON.parse(localStorage.getItem('items'));
+	}
+
+	// Add New Item to Array
+	itemsFromStorage.push(item);
+
+	// convert to JSON Stringing and set to localStorage
+
+	localStorage.setItem('items', JSON.stringify(itemsFromStorage));
 }
 
 // Remove Item Function
