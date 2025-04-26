@@ -158,11 +158,17 @@ function checkUI() {
 	}
 }
 
-// Event Listeners
-itemForm.addEventListener('submit', onAddItemSubmit);
-itemList.addEventListener('click', removeItem);
-clearBtn.addEventListener('click', clearItems);
-itemFilter.addEventListener('input', filterItems);
-document.addEventListener('DOMContentLoaded', displayItems);
+// Initialize App to set up event listeners
+// Removing the event listeners from the global scope and putting them in a init function
+function init() {
+	// Event Listeners
+	itemForm.addEventListener('submit', onAddItemSubmit);
+	itemList.addEventListener('click', removeItem);
+	clearBtn.addEventListener('click', clearItems);
+	itemFilter.addEventListener('input', filterItems);
+	document.addEventListener('DOMContentLoaded', displayItems);
 
-checkUI();
+	checkUI();
+}
+
+init();
