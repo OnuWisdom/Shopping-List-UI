@@ -102,16 +102,41 @@ function getItemsFromStorage() {
 	return itemsFromStorage;
 }
 
-// Remove Item Function
-function removeItem(e) {
+function onClickItem(e) {
 	if (e.target.parentElement.classList.contains('remove-item')) {
-		// console.log('Click');
-		if (confirm('Are You Sure')) {
-			e.target.parentElement.parentElement.remove();
-		}
-
-		checkUI();
+		removeItem(e.target.parentElement.parentElement);
 	}
+
+	checkUI();
+}
+
+// Remove Item Function
+function removeItem(item) {
+	if (confirm('Are You Sure')) {
+		// Remove Item From the DOM
+		item.remove();
+
+		// Remove From localStorage
+		removeItemFromStorage(item.textContent);
+	}
+	// if (e.target.parentElement.classList.contains('remove-item')) {
+	// 	// console.log('Click');
+	// 	if (confirm('Are You Sure')) {
+	// 		e.target.parentElement.parentElement.remove();
+	// 	}
+
+	// 	checkUI();
+	// }
+}
+
+function removeItemFromStorage(item) {
+	let itemsFromStorage = getItemsFromStorage();
+
+	// Filter out Items To be removed
+	itemsFromStorage = itemsFromStorage.filter((i) => i !== item);
+
+	// Reset To LocalStorage
+	localStorage.setItem('items', JSON.stringify(itemsFromStorage));
 }
 
 // Clear Items Function
@@ -123,6 +148,10 @@ function clearItems(e) {
 	while (itemList.firstChild) {
 		itemList.removeChild(itemList.firstChild);
 	}
+
+	// Clear From Local Storage
+	localStorage.removeItem('items');
+	// localStorage.clear(); // This will clear all the items in the local storage-- Not Advisable if you have other items in the local storage
 
 	checkUI();
 }
@@ -163,7 +192,7 @@ function checkUI() {
 function init() {
 	// Event Listeners
 	itemForm.addEventListener('submit', onAddItemSubmit);
-	itemList.addEventListener('click', removeItem);
+	itemList.addEventListener('click', onClickItem);
 	clearBtn.addEventListener('click', clearItems);
 	itemFilter.addEventListener('input', filterItems);
 	document.addEventListener('DOMContentLoaded', displayItems);
