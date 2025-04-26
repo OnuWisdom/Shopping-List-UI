@@ -4,6 +4,14 @@ const itemList = document.getElementById('item-list');
 const clearBtn = document.getElementById('clear');
 const itemFilter = document.getElementById('filter');
 
+function displayItems() {
+	const itemsFromStorage = getItemsFromStorage();
+
+	itemsFromStorage.forEach((item) => addItemsToDom(item));
+
+	checkUI();
+}
+
 function onAddItemSubmit(e) {
 	e.preventDefault();
 	const newItem = itemInput.value;
@@ -61,6 +69,28 @@ function createIcon(classes) {
 
 // Adding Items to Local Storage
 function addItemsToStorage(item) {
+	const itemsFromStorage = getItemsFromStorage(); // This now calls the same thing form there in  here
+
+	/* Check if items are in local storage 
+    These Items are not needed as we are checking in the getItemsFromStorage function and we don'tt wanna repeat ourselves
+    */
+
+	// if (localStorage.getItem('items') === null) {
+	// 	itemsFromStorage = [];
+	// } else {
+	// 	itemsFromStorage = JSON.parse(localStorage.getItem('items'));
+	// }
+
+	// Add New Item to Array
+	itemsFromStorage.push(item);
+
+	// convert to JSON Stringing and set to localStorage
+
+	localStorage.setItem('items', JSON.stringify(itemsFromStorage));
+}
+
+// Get Items from Local Storage
+function getItemsFromStorage() {
 	let itemsFromStorage;
 
 	if (localStorage.getItem('items') === null) {
@@ -69,12 +99,7 @@ function addItemsToStorage(item) {
 		itemsFromStorage = JSON.parse(localStorage.getItem('items'));
 	}
 
-	// Add New Item to Array
-	itemsFromStorage.push(item);
-
-	// convert to JSON Stringing and set to localStorage
-
-	localStorage.setItem('items', JSON.stringify(itemsFromStorage));
+	return itemsFromStorage;
 }
 
 // Remove Item Function
@@ -138,5 +163,6 @@ itemForm.addEventListener('submit', onAddItemSubmit);
 itemList.addEventListener('click', removeItem);
 clearBtn.addEventListener('click', clearItems);
 itemFilter.addEventListener('input', filterItems);
+document.addEventListener('DOMContentLoaded', displayItems);
 
 checkUI();
