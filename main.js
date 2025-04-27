@@ -25,6 +25,15 @@ function onAddItemSubmit(e) {
 		return;
 	}
 
+	// Check if in Edit Mode
+	if (isEditMode) {
+		const itemToEdit = itemList.querySelector('.edit-mode');
+		removeItemFromStorage(itemToEdit.textContent);
+		itemToEdit.classList.remove('edit-mode');
+		itemToEdit.remove();
+		isEditMode = false;
+	}
+
 	// Create Item DOM Element
 	addItemsToDom(newItem);
 
@@ -150,6 +159,7 @@ function removeItem(item) {
 	// }
 }
 
+// Remove Item From Local Storage
 function removeItemFromStorage(item) {
 	let itemsFromStorage = getItemsFromStorage();
 
